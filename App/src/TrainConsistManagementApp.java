@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 /**
  * ========================================================
- * MAIN CLASS - TrainingConsistManagementApp
+ * MAIN CLASS - TrainConsistManagementApp
  * ========================================================
  * * This application manages the Train Consist System.
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 14.0
+ * @version 15.0
  */
 public class TrainConsistManagementApp {
 
@@ -44,14 +44,43 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // ---- CUSTOM RUNTIME EXCEPTION ----
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
+            super(message);
+        }
+    }
+
     // Goods Bogie model
     static class GoodsBogie {
-        String type;
+        String type; // Represents shape/type
         String cargo;
 
+        // Constructor for UC12
         GoodsBogie(String type, String cargo) {
             this.type = type;
             this.cargo = cargo;
+        }
+
+        // Constructor for UC15
+        GoodsBogie(String shape) {
+            this.type = shape;
+        }
+
+        // Assign cargo with safety validation (UC15)
+        void assignCargo(String assignedCargo) {
+            try {
+                // Rule: Rectangular bogie cannot carry petroleum
+                if (this.type.equalsIgnoreCase("Rectangular") && assignedCargo.equalsIgnoreCase("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe Assignment: Rectangular bogies cannot carry Petroleum.");
+                }
+                this.cargo = assignedCargo;
+                System.out.println("Cargo '" + assignedCargo + "' successfully assigned to " + this.type + " bogie.");
+            } catch (CargoSafetyException e) {
+                System.out.println("Exception Caught: " + e.getMessage());
+            } finally {
+                System.out.println("Validation process completed for " + this.type + " bogie.");
+            }
         }
     }
 
@@ -564,6 +593,25 @@ public class TrainConsistManagementApp {
         }
 
         System.out.println("\nUC14 exception handling completed...\n");
+
+
+        // ========================================================
+        // USE CASE 15: Safe Cargo Assignment Using try-catch-finally
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC15 - Safe Cargo Assignment Using try-catch-finally ");
+        System.out.println("=========================================================\n");
+
+        System.out.println("--- Attempting Safe Assignment ---");
+        GoodsBogie safeBogie = new GoodsBogie("Cylindrical");
+        safeBogie.assignCargo("Petroleum");
+
+        System.out.println("\n--- Attempting Unsafe Assignment ---");
+        GoodsBogie unsafeBogie = new GoodsBogie("Rectangular");
+        unsafeBogie.assignCargo("Petroleum");
+
+        System.out.println("\nUC15 safe assignment completed...");
 
 
         scanner.close();
