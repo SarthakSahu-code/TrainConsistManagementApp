@@ -4,6 +4,8 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ========================================================
@@ -13,7 +15,7 @@ import java.util.Set;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 5.0
+ * @version 6.0
  */
 public class TrainConsistManagementApp {
 
@@ -160,6 +162,30 @@ public class TrainConsistManagementApp {
         System.out.println(formation);
         System.out.println("\nNote:");
         System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
+        System.out.println("\n");
+
+
+        // ========================================================
+        // USE CASE 6: Map Bogie to Capacity (HashMap)
+        // ========================================================
+
+        System.out.println("=========================================");
+        System.out.println(" UC6 - Map Bogie to Capacity (HashMap) ");
+        System.out.println("=========================================\n");
+
+        // HashMap stores data in key -> value format
+        Map<String, Integer> capacityMap = new HashMap<>();
+
+        // ---- Insert bogie capacities ----
+        capacityMap.put("Sleeper", 72);
+        capacityMap.put("AC Chair", 75);
+        capacityMap.put("First Class", 24);
+
+        // Display bogie capacity information using entrySet()
+        System.out.println("Bogie Capacity Mapping:");
+        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
+            System.out.println("- " + entry.getKey() + " : " + entry.getValue() + " seats");
+        }
         System.out.println();
 
     }
