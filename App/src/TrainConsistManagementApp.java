@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 3.0
+ * @version 4.0
  */
 public class TrainConsistManagementApp {
 
@@ -97,6 +98,39 @@ public class TrainConsistManagementApp {
 
         // Print the final set to observe that duplicates are removed automatically
         System.out.println("Unique Bogie IDs : " + bogies);
+        System.out.println("\n");
+
+
+        // ========================================================
+        // USE CASE 4: Maintain Ordered Bogie Consist
+        // ========================================================
+
+        System.out.println("=========================================");
+        System.out.println(" UC4 - Maintain Ordered Bogie Consist ");
+        System.out.println("=========================================\n");
+
+        // Create a LinkedList
+        // LinkedList maintains insertion order and allows fast inserts
+        LinkedList<String> orderedConsist = new LinkedList<>();
+
+        // Add bogies: Engine, Sleeper, AC, Cargo, Guard
+        orderedConsist.add("Engine");
+        orderedConsist.add("Sleeper");
+        orderedConsist.add("AC");
+        orderedConsist.add("Cargo");
+        orderedConsist.add("Guard");
+        System.out.println("Initial Ordered Consist : " + orderedConsist);
+
+        // Insert a Pantry Car at position 2
+        orderedConsist.add(2, "Pantry Car");
+        System.out.println("Consist after inserting Pantry Car at index 2 : " + orderedConsist);
+
+        // Remove the first and last bogie
+        orderedConsist.removeFirst();
+        orderedConsist.removeLast();
+
+        // Display the final ordered train consist
+        System.out.println("Final ordered train consist : " + orderedConsist);
         System.out.println();
 
     }
