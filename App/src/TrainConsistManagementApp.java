@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 13.0
+ * @version 14.0
  */
 public class TrainConsistManagementApp {
 
@@ -33,7 +33,6 @@ public class TrainConsistManagementApp {
             this.capacity = capacity;
         }
 
-        // Used in UC13 matching screenshot requirement
         public Bogie(String type, int capacity, boolean overload) {
             this.name = type;
             this.capacity = capacity;
@@ -53,6 +52,32 @@ public class TrainConsistManagementApp {
         GoodsBogie(String type, String cargo) {
             this.type = type;
             this.cargo = cargo;
+        }
+    }
+
+    // ---- CUSTOM EXCEPTION ----
+    static class InvalidCapacityException extends Exception {
+        public InvalidCapacityException(String message) {
+            super(message);
+        }
+    }
+
+    // Passenger Bogie model with validation
+    static class PassengerBogie {
+        String type;
+        int capacity;
+
+        public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+            if (capacity <= 0) {
+                throw new InvalidCapacityException("Capacity must be greater than zero");
+            }
+            this.type = type;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return type + " (" + capacity + " seats)";
         }
     }
 
@@ -503,7 +528,43 @@ public class TrainConsistManagementApp {
         System.out.println();
         System.out.println("Loop Duration        : " + loopDuration + " ns");
         System.out.println("Stream Duration      : " + streamDuration + " ns");
-        System.out.println("\nUC13 performance comparison completed...");
+        System.out.println("\nUC13 performance comparison completed...\n");
+
+
+        // ========================================================
+        // USE CASE 14: Handle Invalid Bogie Capacity (Custom Exception)
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC14 - Handle Invalid Bogie Capacity (Custom Exception) ");
+        System.out.println("=========================================================\n");
+
+        System.out.println("--- Testing Valid Capacity Creation ---");
+        try {
+            PassengerBogie validBogie = new PassengerBogie("Sleeper", 72);
+            System.out.println("Successfully created: " + validBogie);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("\n--- Testing Negative Capacity Handling ---");
+        try {
+            PassengerBogie negativeBogie = new PassengerBogie("General", -10);
+            System.out.println("Successfully created: " + negativeBogie);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Exception Caught: " + e.getMessage());
+        }
+
+        System.out.println("\n--- Testing Zero Capacity Handling ---");
+        try {
+            PassengerBogie zeroBogie = new PassengerBogie("AC Chair", 0);
+            System.out.println("Successfully created: " + zeroBogie);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Exception Caught: " + e.getMessage());
+        }
+
+        System.out.println("\nUC14 exception handling completed...\n");
+
 
         scanner.close();
     }
