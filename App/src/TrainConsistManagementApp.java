@@ -3,9 +3,9 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ========================================================
@@ -15,9 +15,25 @@ import java.util.Map;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 6.0
+ * @version 7.0
  */
 public class TrainConsistManagementApp {
+
+    // Inner Bogie class to model passenger bogies
+    static class Bogie {
+        String name;
+        int capacity;
+
+        public Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return name + " (" + capacity + " seats)";
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -185,6 +201,41 @@ public class TrainConsistManagementApp {
         System.out.println("Bogie Capacity Mapping:");
         for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
             System.out.println("- " + entry.getKey() + " : " + entry.getValue() + " seats");
+        }
+        System.out.println("\n");
+
+
+        // ========================================================
+        // USE CASE 7: Sort Bogies by Capacity (Comparator)
+        // ========================================================
+
+        System.out.println("=========================================");
+        System.out.println(" UC7 - Sort Bogies by Capacity (Comparator) ");
+        System.out.println("=========================================\n");
+
+        // Create List of passenger bogies
+        List<Bogie> bogieObjectsList = new ArrayList<>();
+
+        // Create bogie objects and store them in the list
+        bogieObjectsList.add(new Bogie("Sleeper", 72));
+        bogieObjectsList.add(new Bogie("First Class", 24));
+        bogieObjectsList.add(new Bogie("AC Chair", 75));
+        bogieObjectsList.add(new Bogie("General", 90));
+
+        // Display unsorted data
+        System.out.println("Unsorted Bogies:");
+        for (Bogie b : bogieObjectsList) {
+            System.out.println("- " + b);
+        }
+        System.out.println();
+
+        // Sort using Comparator logic (Lambda Expression)
+        bogieObjectsList.sort((b1, b2) -> Integer.compare(b1.capacity, b2.capacity));
+
+        // Display sorted result
+        System.out.println("Sorted Bogies (Lowest to Highest Capacity):");
+        for (Bogie b : bogieObjectsList) {
+            System.out.println("- " + b);
         }
         System.out.println();
 
