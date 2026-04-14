@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 8.0
+ * @version 9.0
  */
 public class TrainConsistManagementApp {
 
@@ -252,7 +252,7 @@ public class TrainConsistManagementApp {
         // Create list of passenger bogies (same style as UC7)
         List<Bogie> streamBogiesList = new ArrayList<>();
         streamBogiesList.add(new Bogie("Sleeper", 72));
-        streamBogiesList.add(new Bogie("AC Chair", 56)); // Using 56 as shown in output screenshot
+        streamBogiesList.add(new Bogie("AC Chair", 56));
         streamBogiesList.add(new Bogie("First Class", 24));
         streamBogiesList.add(new Bogie("General", 90));
 
@@ -272,7 +272,45 @@ public class TrainConsistManagementApp {
         for (Bogie b : filteredBogies) {
             System.out.println(b.name + " -> " + b.capacity);
         }
-        System.out.println("\nUC8 filtering completed...");
-        System.out.println();
+        System.out.println("\nUC8 filtering completed...\n");
+
+
+        // ========================================================
+        // USE CASE 9: Group Bogies by Type
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC9 - Group Bogies by Type ");
+        System.out.println("=========================================================\n");
+
+        // Create list of bogies
+        List<Bogie> groupingBogiesList = new ArrayList<>();
+        groupingBogiesList.add(new Bogie("Sleeper", 72));
+        groupingBogiesList.add(new Bogie("AC Chair", 56));
+        groupingBogiesList.add(new Bogie("First Class", 24));
+        groupingBogiesList.add(new Bogie("Sleeper", 70));
+        groupingBogiesList.add(new Bogie("AC Chair", 60));
+
+        // Display input bogies
+        System.out.println("All Bogies:");
+        for (Bogie b : groupingBogiesList) {
+            System.out.println(b.name + " -> " + b.capacity);
+        }
+
+        // ---- GROUP USING COLLECTORS.GROUPINGBY ----
+        Map<String, List<Bogie>> groupedBogies = groupingBogiesList.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
+
+        // Display grouped structure
+        System.out.println("\nGrouped Bogies:\n");
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println("Bogie Type: " + entry.getKey());
+            for (Bogie b : entry.getValue()) {
+                System.out.println("  Capacity -> " + b.capacity);
+            }
+            System.out.println();
+        }
+
+        System.out.println("UC9 grouping completed...");
     }
 }
