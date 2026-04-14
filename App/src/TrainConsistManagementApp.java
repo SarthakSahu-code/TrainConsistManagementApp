@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 11.0
+ * @version 12.0
  */
 public class TrainConsistManagementApp {
 
@@ -36,6 +36,17 @@ public class TrainConsistManagementApp {
         @Override
         public String toString() {
             return name + " (" + capacity + " seats)";
+        }
+    }
+
+    // Goods Bogie model
+    static class GoodsBogie {
+        String type;
+        String cargo;
+
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
         }
     }
 
@@ -396,10 +407,52 @@ public class TrainConsistManagementApp {
             System.out.println("Cargo Code [" + cargoCode + "] : INVALID (Must match PET-AB format)");
         }
 
-        System.out.println("\nUC11 validation completed...");
+        System.out.println("\nUC11 validation completed...\n");
 
-        // Note: It is best practice to close the scanner, but closing it here
-        // will also close System.in. Since it's the end of main, we can safely close it.
+
+        // ========================================================
+        // USE CASE 12: Safety Compliance Check for Goods Bogies
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC12 - Safety Compliance Check for Goods Bogies ");
+        System.out.println("=========================================================\n");
+
+        // Create goods bogie list
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsBogies.add(new GoodsBogie("Open", "Coal"));
+        goodsBogies.add(new GoodsBogie("Box", "Electronics"));
+
+        // For testing invalid cargo uncomment below line:
+        // goodsBogies.add(new GoodsBogie("Cylindrical", "Water"));
+
+        System.out.println("Goods Bogies:");
+        for(GoodsBogie gb : goodsBogies){
+            System.out.println("- Type: " + gb.type + ", Cargo: " + gb.cargo);
+        }
+        System.out.println();
+
+        // Check compliance using allMatch()
+        // Condition: If type is "Cylindrical", cargo must be "Petroleum"
+        boolean isSafe = goodsBogies.stream()
+                .allMatch(b -> {
+                    if (b.type.equals("Cylindrical")) {
+                        return b.cargo.equals("Petroleum");
+                    }
+                    return true; // Other bogie types allow any cargo
+                });
+
+        // Display safety status
+        System.out.println("Safety Compliance Check:");
+        if (isSafe) {
+            System.out.println("Status: SAFE - All cargo rules followed.");
+        } else {
+            System.out.println("Status: UNSAFE - Rule violation detected!");
+        }
+
+        System.out.println("\nUC12 validation completed...");
+
         scanner.close();
     }
 }
