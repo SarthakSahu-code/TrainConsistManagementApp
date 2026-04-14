@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +19,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 10.0
+ * @version 11.0
  */
 public class TrainConsistManagementApp {
 
@@ -346,5 +349,57 @@ public class TrainConsistManagementApp {
         // Display the total seating capacity
         System.out.println("Total Seating Capacity : " + totalSeats);
         System.out.println("\nUC10 aggregation completed...\n");
+
+
+        // ========================================================
+        // USE CASE 11: Validate Train ID and Cargo Code
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC11 - Validate Train ID and Cargo Code ");
+        System.out.println("=========================================================\n");
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Accept input
+        System.out.print("Enter Train ID (Format: TRN-1234): ");
+        String trainId = scanner.nextLine();
+
+        System.out.print("Enter Cargo Code (Format: PET-AB): ");
+        String cargoCode = scanner.nextLine();
+
+        // ---- DEFINE REGEX RULES ----
+        // Train ID must be "TRN-" followed by exactly 4 digits
+        String trainIdRegex = "TRN-\\d{4}";
+        // Cargo Code must be "PET-" followed by exactly 2 uppercase letters
+        String cargoCodeRegex = "PET-[A-Z]{2}";
+
+        Pattern trainIdPattern = Pattern.compile(trainIdRegex);
+        Pattern cargoCodePattern = Pattern.compile(cargoCodeRegex);
+
+        Matcher trainIdMatcher = trainIdPattern.matcher(trainId);
+        Matcher cargoCodeMatcher = cargoCodePattern.matcher(cargoCode);
+
+        System.out.println("\n--- Validation Results ---");
+
+        // Validate Train ID
+        if (trainIdMatcher.matches()) {
+            System.out.println("Train ID [" + trainId + "] : VALID");
+        } else {
+            System.out.println("Train ID [" + trainId + "] : INVALID (Must match TRN-1234 format)");
+        }
+
+        // Validate Cargo Code
+        if (cargoCodeMatcher.matches()) {
+            System.out.println("Cargo Code [" + cargoCode + "] : VALID");
+        } else {
+            System.out.println("Cargo Code [" + cargoCode + "] : INVALID (Must match PET-AB format)");
+        }
+
+        System.out.println("\nUC11 validation completed...");
+
+        // Note: It is best practice to close the scanner, but closing it here
+        // will also close System.in. Since it's the end of main, we can safely close it.
+        scanner.close();
     }
 }
