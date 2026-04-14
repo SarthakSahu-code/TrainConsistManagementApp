@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 4.0
+ * @version 5.0
  */
 public class TrainConsistManagementApp {
 
@@ -131,6 +132,34 @@ public class TrainConsistManagementApp {
 
         // Display the final ordered train consist
         System.out.println("Final ordered train consist : " + orderedConsist);
+        System.out.println("\n");
+
+
+        // ========================================================
+        // USE CASE 5: Preserve Insertion Order of Bogies
+        // ========================================================
+
+        System.out.println("=========================================");
+        System.out.println(" UC5 - Preserve Insertion Order of Bogies ");
+        System.out.println("=========================================\n");
+
+        // LinkedHashSet preserves order and ensures uniqueness
+        Set<String> formation = new LinkedHashSet<>();
+
+        // Attach bogies such as: Engine, Sleeper, Cargo, Guard
+        formation.add("Engine");
+        formation.add("Sleeper");
+        formation.add("Cargo");
+        formation.add("Guard");
+
+        // Attempt to attach a duplicate bogie intentionally
+        formation.add("Sleeper");
+
+        // Display the final formation order
+        System.out.println("Final Train Formation:");
+        System.out.println(formation);
+        System.out.println("\nNote:");
+        System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
         System.out.println();
 
     }
