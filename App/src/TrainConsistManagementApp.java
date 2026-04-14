@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 9.0
+ * @version 10.0
  */
 public class TrainConsistManagementApp {
 
@@ -311,6 +311,40 @@ public class TrainConsistManagementApp {
             System.out.println();
         }
 
-        System.out.println("UC9 grouping completed...");
+        System.out.println("UC9 grouping completed...\n");
+
+
+        // ========================================================
+        // USE CASE 10: Count Total Seats in Train
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC10 - Count Total Seats in Train ");
+        System.out.println("=========================================================\n");
+
+        // Create list of bogies
+        List<Bogie> aggregateBogiesList = new ArrayList<>();
+        aggregateBogiesList.add(new Bogie("Sleeper", 72));
+        aggregateBogiesList.add(new Bogie("AC Chair", 56));
+        aggregateBogiesList.add(new Bogie("First Class", 24));
+        aggregateBogiesList.add(new Bogie("Sleeper", 70));
+
+        // Display bogies
+        System.out.println("Bogies in Train:");
+        for (Bogie b : aggregateBogiesList) {
+            System.out.println(b.name + " -> " + b.capacity);
+        }
+        System.out.println();
+
+        // ---- AGGREGATE USING REDUCE ----
+        // map() extracts capacity field from Bogie object
+        // reduce() sums the capacities
+        int totalSeats = aggregateBogiesList.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+
+        // Display the total seating capacity
+        System.out.println("Total Seating Capacity : " + totalSeats);
+        System.out.println("\nUC10 aggregation completed...\n");
     }
 }
