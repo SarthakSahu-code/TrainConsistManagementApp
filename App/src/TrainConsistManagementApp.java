@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 12.0
+ * @version 13.0
  */
 public class TrainConsistManagementApp {
 
@@ -30,6 +30,12 @@ public class TrainConsistManagementApp {
 
         public Bogie(String name, int capacity) {
             this.name = name;
+            this.capacity = capacity;
+        }
+
+        // Used in UC13 matching screenshot requirement
+        public Bogie(String type, int capacity, boolean overload) {
+            this.name = type;
             this.capacity = capacity;
         }
 
@@ -424,9 +430,6 @@ public class TrainConsistManagementApp {
         goodsBogies.add(new GoodsBogie("Open", "Coal"));
         goodsBogies.add(new GoodsBogie("Box", "Electronics"));
 
-        // For testing invalid cargo uncomment below line:
-        // goodsBogies.add(new GoodsBogie("Cylindrical", "Water"));
-
         System.out.println("Goods Bogies:");
         for(GoodsBogie gb : goodsBogies){
             System.out.println("- Type: " + gb.type + ", Cargo: " + gb.cargo);
@@ -451,7 +454,56 @@ public class TrainConsistManagementApp {
             System.out.println("Status: UNSAFE - Rule violation detected!");
         }
 
-        System.out.println("\nUC12 validation completed...");
+        System.out.println("\nUC12 validation completed...\n");
+
+
+        // ========================================================
+        // USE CASE 13: Performance Comparison (Loops vs Streams)
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC13 - Performance Comparison (Loops vs Streams) ");
+        System.out.println("=========================================================\n");
+
+        // Create large test dataset
+        List<Bogie> performanceBogies = new ArrayList<>();
+        System.out.println("Generating test dataset of 1,000,000 bogies...");
+        for (int i = 0; i < 1000000; i++) {
+            // Alternate capacities above and below 60
+            performanceBogies.add(new Bogie("TestBogie", (i % 2 == 0) ? 75 : 50));
+        }
+
+        // --- MEASURE LOOP EXECUTION TIME ---
+        long loopStartTime = System.nanoTime();
+
+        List<Bogie> loopFiltered = new ArrayList<>();
+        for (Bogie b : performanceBogies) {
+            if (b.capacity > 60) {
+                loopFiltered.add(b);
+            }
+        }
+
+        long loopEndTime = System.nanoTime();
+        long loopDuration = loopEndTime - loopStartTime;
+
+        // --- MEASURE STREAM EXECUTION TIME ---
+        long streamStartTime = System.nanoTime();
+
+        List<Bogie> streamFiltered = performanceBogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long streamEndTime = System.nanoTime();
+        long streamDuration = streamEndTime - streamStartTime;
+
+        // --- DISPLAY PERFORMANCE RESULTS ---
+        System.out.println("\nPerformance Results (Filtering " + performanceBogies.size() + " items):");
+        System.out.println("Items found (Loop)   : " + loopFiltered.size());
+        System.out.println("Items found (Stream) : " + streamFiltered.size());
+        System.out.println();
+        System.out.println("Loop Duration        : " + loopDuration + " ns");
+        System.out.println("Stream Duration      : " + streamDuration + " ns");
+        System.out.println("\nUC13 performance comparison completed...");
 
         scanner.close();
     }
