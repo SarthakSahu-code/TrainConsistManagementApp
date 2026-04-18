@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 17.0
+ * @version 18.0
  */
 public class TrainingConsistManagementApp {
 
@@ -679,6 +679,48 @@ public class TrainingConsistManagementApp {
         System.out.println(Arrays.toString(bogieNames));
         System.out.println("\nUC17 sorting completed...\n");
 
+
+        // ========================================================
+        // USE CASE 18: Linear Search for Bogie ID
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC18 - Linear Search for Bogie ID ");
+        System.out.println("=========================================================\n");
+
+        // Create array of bogie IDs
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+        // Bogie ID to search
+        String searchId = "BG309";
+
+        // Display all bogies
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.println("- " + id);
+        }
+        System.out.println();
+
+        // ---- LINEAR SEARCH LOGIC ----
+        // Traverse each element sequentially
+        boolean found = false;
+
+        for (String id : bogieIds) {
+            if (id.equals(searchId)) {
+                found = true;
+                break; // Early termination when match is found
+            }
+        }
+
+        // Display result
+        System.out.println("Searching for Bogie ID: " + searchId);
+        if (found) {
+            System.out.println("Result: Match found! Bogie " + searchId + " exists in the system.");
+        } else {
+            System.out.println("Result: Not found. Bogie " + searchId + " does not exist.");
+        }
+
+        System.out.println("\nUC18 search completed...\n");
 
         // Close scanner
         scanner.close();
