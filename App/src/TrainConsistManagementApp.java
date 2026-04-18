@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 19.0
+ * @version 20.0
  */
 public class TrainingConsistManagementApp {
 
@@ -692,7 +692,7 @@ public class TrainingConsistManagementApp {
         String[] linearSearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
         // Bogie ID to search
-        String searchId = "BG309";
+        String searchId_uc18 = "BG309";
 
         // Display all bogies
         System.out.println("Available Bogie IDs:");
@@ -703,21 +703,21 @@ public class TrainingConsistManagementApp {
 
         // ---- LINEAR SEARCH LOGIC ----
         // Traverse each element sequentially
-        boolean found = false;
+        boolean found_uc18 = false;
 
         for (String id : linearSearchIds) {
-            if (id.equals(searchId)) {
-                found = true;
+            if (id.equals(searchId_uc18)) {
+                found_uc18 = true;
                 break; // Early termination when match is found
             }
         }
 
         // Display result
-        System.out.println("Searching for Bogie ID: " + searchId);
-        if (found) {
-            System.out.println("Result: Match found! Bogie " + searchId + " exists in the system.");
+        System.out.println("Searching for Bogie ID: " + searchId_uc18);
+        if (found_uc18) {
+            System.out.println("Result: Match found! Bogie " + searchId_uc18 + " exists in the system.");
         } else {
-            System.out.println("Result: Not found. Bogie " + searchId + " does not exist.");
+            System.out.println("Result: Not found. Bogie " + searchId_uc18 + " does not exist.");
         }
 
         System.out.println("\nUC18 search completed...\n");
@@ -738,7 +738,7 @@ public class TrainingConsistManagementApp {
         Arrays.sort(binarySearchIds);
 
         // Search key
-        String key = "BG309";
+        String key_uc19 = "BG309";
 
         // Display available bogies
         System.out.println("Sorted Bogie IDs:");
@@ -752,14 +752,14 @@ public class TrainingConsistManagementApp {
         int high = binarySearchIds.length - 1;
         boolean isFound = false;
 
-        System.out.println("Searching for Bogie ID: " + key);
+        System.out.println("Searching for Bogie ID: " + key_uc19);
 
         while (low <= high) {
             // Compute middle index safely
             int mid = low + (high - low) / 2;
 
             // Compare key with middle element
-            int comparison = key.compareTo(binarySearchIds[mid]);
+            int comparison = key_uc19.compareTo(binarySearchIds[mid]);
 
             if (comparison == 0) {
                 isFound = true;
@@ -775,14 +775,56 @@ public class TrainingConsistManagementApp {
 
         // Display result
         if (isFound) {
-            System.out.println("Result: Match found! Bogie " + key + " exists in the system.");
+            System.out.println("Result: Match found! Bogie " + key_uc19 + " exists in the system.");
         } else {
-            System.out.println("Result: Not found. Bogie " + key + " does not exist.");
+            System.out.println("Result: Not found. Bogie " + key_uc19 + " does not exist.");
         }
 
         System.out.println("\nUC19 binary search completed...\n");
 
-        // Close scanner
+
+        // ========================================================
+        // USE CASE 20: Exception Handling During Search Operations
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC20 - Exception Handling During Search Operations ");
+        System.out.println("=========================================================\n");
+
+        // Create bogie array (empty train scenario)
+        String[] emptyBogieIds = {};
+
+        // Search key
+        String searchId = "BG101";
+
+        // ---- FAIL-FAST VALIDATION ----
+        // Check if train has bogies before performing search
+        if (emptyBogieIds.length == 0) {
+            throw new IllegalStateException("Cannot perform search. Train consist is empty.");
+        }
+
+        // ---- SEARCH LOGIC (executes only if data exists) ----
+        boolean found = false;
+
+        for (String id : emptyBogieIds) {
+            if (id.equals(searchId)) {
+                found = true;
+                break;
+            }
+        }
+
+        // Display result
+        if (found) {
+            System.out.println("Result: Match found! Bogie " + searchId + " exists in the system.");
+        } else {
+            System.out.println("Result: Not found. Bogie " + searchId + " does not exist.");
+        }
+
+        System.out.println("\nUC20 execution completed...");
+
+        // Close scanner (Note: Because an unchecked exception is intentionally
+        // thrown above on the empty array, the program execution will halt there
+        // and this line will not be reached).
         scanner.close();
     }
 }
