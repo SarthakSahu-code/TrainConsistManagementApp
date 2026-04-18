@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 18.0
+ * @version 19.0
  */
 public class TrainingConsistManagementApp {
 
@@ -689,14 +689,14 @@ public class TrainingConsistManagementApp {
         System.out.println("=========================================================\n");
 
         // Create array of bogie IDs
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        String[] linearSearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
         // Bogie ID to search
         String searchId = "BG309";
 
         // Display all bogies
         System.out.println("Available Bogie IDs:");
-        for (String id : bogieIds) {
+        for (String id : linearSearchIds) {
             System.out.println("- " + id);
         }
         System.out.println();
@@ -705,7 +705,7 @@ public class TrainingConsistManagementApp {
         // Traverse each element sequentially
         boolean found = false;
 
-        for (String id : bogieIds) {
+        for (String id : linearSearchIds) {
             if (id.equals(searchId)) {
                 found = true;
                 break; // Early termination when match is found
@@ -721,6 +721,66 @@ public class TrainingConsistManagementApp {
         }
 
         System.out.println("\nUC18 search completed...\n");
+
+
+        // ========================================================
+        // USE CASE 19: Binary Search for Bogie ID
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC19 - Binary Search for Bogie ID ");
+        System.out.println("=========================================================\n");
+
+        // Create array of bogie IDs
+        String[] binarySearchIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+        // Ensure data is sorted before binary search (precondition)
+        Arrays.sort(binarySearchIds);
+
+        // Search key
+        String key = "BG309";
+
+        // Display available bogies
+        System.out.println("Sorted Bogie IDs:");
+        for (String id : binarySearchIds) {
+            System.out.println("- " + id);
+        }
+        System.out.println();
+
+        // ---- BINARY SEARCH LOGIC ----
+        int low = 0;
+        int high = binarySearchIds.length - 1;
+        boolean isFound = false;
+
+        System.out.println("Searching for Bogie ID: " + key);
+
+        while (low <= high) {
+            // Compute middle index safely
+            int mid = low + (high - low) / 2;
+
+            // Compare key with middle element
+            int comparison = key.compareTo(binarySearchIds[mid]);
+
+            if (comparison == 0) {
+                isFound = true;
+                break; // Match found
+            } else if (comparison < 0) {
+                // Key is smaller, search left half
+                high = mid - 1;
+            } else {
+                // Key is larger, search right half
+                low = mid + 1;
+            }
+        }
+
+        // Display result
+        if (isFound) {
+            System.out.println("Result: Match found! Bogie " + key + " exists in the system.");
+        } else {
+            System.out.println("Result: Not found. Bogie " + key + " does not exist.");
+        }
+
+        System.out.println("\nUC19 binary search completed...\n");
 
         // Close scanner
         scanner.close();
