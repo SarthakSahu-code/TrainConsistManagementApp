@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 /**
  * ========================================================
- * MAIN CLASS - TrainConsistManagementApp
+ * MAIN CLASS - TrainingConsistManagementApp
  * ========================================================
  * * This application manages the Train Consist System.
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 15.0
+ * @version 16.0
  */
 public class TrainConsistManagementApp {
 
@@ -611,9 +611,50 @@ public class TrainConsistManagementApp {
         GoodsBogie unsafeBogie = new GoodsBogie("Rectangular");
         unsafeBogie.assignCargo("Petroleum");
 
-        System.out.println("\nUC15 safe assignment completed...");
+        System.out.println("\nUC15 safe assignment completed...\n");
 
 
+        // ========================================================
+        // USE CASE 16: Manual Sorting using Bubble Sort
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
+        System.out.println("=========================================================\n");
+
+        // Create array of passenger bogie capacities
+        int[] capacities = {72, 56, 24, 70, 60};
+
+        // Display original order
+        System.out.println("Original Capacities:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
+
+        // ---- BUBBLE SORT LOGIC ----
+        // Outer loop controls number of passes
+        for (int i = 0; i < capacities.length - 1; i++) {
+            // Inner loop compares adjacent elements
+            for (int j = 0; j < capacities.length - 1 - i; j++) {
+                // If left element is greater than right, swap them
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+
+        // Display sorted result
+        System.out.println("\nSorted Capacities (Ascending):");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
+        System.out.println("\n\nUC16 manual sorting completed...");
+
+
+        // Close scanner
         scanner.close();
     }
 }
