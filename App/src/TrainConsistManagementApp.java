@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
  * * It contains multiple Use Cases demonstrating Java collections.
  * *
  * * @author Developer
- * @version 16.0
+ * @version 17.0
  */
-public class TrainConsistManagementApp {
+public class TrainingConsistManagementApp {
 
     // Inner Bogie class to model passenger bogies
     static class Bogie {
@@ -651,7 +652,32 @@ public class TrainConsistManagementApp {
         for (int c : capacities) {
             System.out.print(c + " ");
         }
-        System.out.println("\n\nUC16 manual sorting completed...");
+        System.out.println("\n\nUC16 manual sorting completed...\n");
+
+
+        // ========================================================
+        // USE CASE 17: Sort Bogie Names Using Arrays.sort()
+        // ========================================================
+
+        System.out.println("=========================================================");
+        System.out.println(" UC17 - Sort Bogie Names Using Arrays.sort() ");
+        System.out.println("=========================================================\n");
+
+        // Create an array of bogie names
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+        // Display original order
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
+        System.out.println();
+
+        // Sort using Arrays.sort()
+        Arrays.sort(bogieNames);
+
+        // Display sorted result
+        System.out.println("Sorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
+        System.out.println("\nUC17 sorting completed...\n");
 
 
         // Close scanner
